@@ -74,7 +74,6 @@ export class UserStore{
         }
     }
     async update(id :string | number , u:user ) :Promise<user>{
-        //fname VARCHAR, lname VARCHAR, username VARCHAR, password VARCHAR
         try{
             const sql = `UPDATE users SET fname=($1) , lname=($2) , username=($3), password=($4) WHERE id=($5) RETURNING *; `;
             const connection = await client.connect();
