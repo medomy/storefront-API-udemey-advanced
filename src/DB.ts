@@ -13,7 +13,9 @@ BCRYPT_PASSWORD ,
 SALT_ROUNDS,
 TOKEN_SECRET
 } = process.env;
+
 let client:any ;
+
 if(ENV === "dev"){
     client = new Pool ({
         host : POSTGRES_HOST,

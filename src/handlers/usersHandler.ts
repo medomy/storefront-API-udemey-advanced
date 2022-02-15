@@ -52,7 +52,8 @@ const update = async (req: express.Request, res: express.Response) => {
             password : req.body.password ? req.body.password : user.password
         }
         const theUpdatedUser = await store.update(req.params.id , updatedUser);
-        res.json(theUpdatedUser);
+        const token = jwt.sign({ user: theUpdatedUser }, token_secret);
+        res.json(token);
     }catch(err){
         res.status(400);
         res.json(err);
