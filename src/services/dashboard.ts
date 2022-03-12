@@ -1,7 +1,7 @@
 import client from "../DB";
 
 export class Dashboard{
-    async usersCarts(): Promise<{username : string , productname : string , qty : number}>{
+    async usersCarts(): Promise<{username : string , productname : string , qty : number}[]>{
         try {
             //@ts-ignore
             const conn = await client.connect()
@@ -10,7 +10,6 @@ export class Dashboard{
             const result = await conn.query(sql)
       
             conn.release()
-      
             return result.rows
           } catch (err) {
             throw new Error(`unable get products and orders: ${err}`)
