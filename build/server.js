@@ -9,6 +9,7 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const productsHandler_1 = __importDefault(require("./handlers/productsHandler"));
 const usersHandler_1 = __importDefault(require("./handlers/usersHandler"));
 const dashboardHandler_1 = __importDefault(require("./handlers/dashboardHandler"));
+const ordersHandler_1 = __importDefault(require("./handlers/ordersHandler"));
 const app = (0, express_1.default)();
 const port = 3000;
 const address = `http://localhost:${port}`;
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 (0, productsHandler_1.default)(app);
 (0, usersHandler_1.default)(app);
 (0, dashboardHandler_1.default)(app);
+(0, ordersHandler_1.default)(app);
 app.listen(port, () => {
     console.log(`server opened at ${address}`);
 });

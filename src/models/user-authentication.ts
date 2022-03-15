@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 
 dotenv.config();
-const pepper : string | unknown = process.env.BCRYPT_PASSWORD;
+const pepper : string | unknown = process.env.BCRYPT_PASSWORD?.toString();
 const salt = process.env.SALT_ROUNDS;
 export type user ={
     id?: string | number;

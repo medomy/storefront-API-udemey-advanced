@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import productsHandler from "./handlers/productsHandler";
 import usersHandler from "./handlers/usersHandler";
 import dashboardHandler from "./handlers/dashboardHandler";
+import ordersHandler from "./handlers/ordersHandler";
 
 const app : express.Application = express();
 const port : number = 3000;
@@ -23,6 +24,7 @@ app.get('/',(req:express.Request , res: express.Response)=>{
 productsHandler(app);
 usersHandler(app);
 dashboardHandler(app);
+ordersHandler(app);
 
 app.listen(port,()=>{
     console.log (`server opened at ${address}`);

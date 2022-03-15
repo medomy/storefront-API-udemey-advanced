@@ -12,8 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dashboard_1 = require("../services/dashboard");
 const dashboard = new dashboard_1.Dashboard;
 const userswithcart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const userswithcarts = yield dashboard.usersCarts();
-    res.json(userswithcart);
+    try {
+        const userswithcarts = yield dashboard.usersCarts();
+        res.json(userswithcart);
+    }
+    catch (err) {
+        res.status(404);
+        res.json(err);
+    }
 });
 const dashboardHandler = (app) => {
     app.get('/userswithcarts', userswithcart);

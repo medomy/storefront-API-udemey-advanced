@@ -21,13 +21,25 @@ dotenv_1.default.config();
 const token_secret = process.env.TOKEN_SECRET ? process.env.TOKEN_SECRET : "";
 const store = new user_authentication_1.UserStore;
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield store.index();
-    res.json(users);
+    try {
+        const users = yield store.index();
+        res.json(users);
+    }
+    catch (err) {
+        res.status(400);
+        res.json(err);
+    }
 });
 const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield store.show(req.params.id);
-    const token = jsonwebtoken_1.default.sign({ user: user }, token_secret);
-    res.json(token);
+    try {
+        const user = yield store.show(req.params.id);
+        //const token = jwt.sign({ user: user }, token_secret);
+        res.json(user);
+    }
+    catch (err) {
+        res.status(400);
+        res.json(err);
+    }
 });
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -47,8 +59,14 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 const destroy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const deletedUser = yield store.delete(req.params.id);
-    res.json(deletedUser);
+    try {
+        const deletedUser = yield store.delete(req.params.id);
+        res.json(deletedUser);
+    }
+    catch (err) {
+        res.status(400);
+        res.json(err);
+    }
 });
 const update = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield store.show(req.params.id);
@@ -69,9 +87,15 @@ const update = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 const authenticate = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const authenticatedUser = yield store.authinticate(req.body.userName, req.body.password);
-    const token = jsonwebtoken_1.default.sign({ user: authenticatedUser }, token_secret);
-    res.json(token);
+    try {
+        const authenticatedUser = yield store.authinticate(req.body.userName, req.body.password);
+        const token = jsonwebtoken_1.default.sign({ user: authenticatedUser }, token_secret);
+        res.json(token);
+    }
+    catch (err) {
+        res.status(400);
+        res.json(err);
+    }
 });
 // for cart table (many to many relation between users and products);
 const postCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -85,12 +109,18 @@ const postCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 const getCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const cartItems = yield store.getCartItem(req.params.id);
-    res.json(cartItems);
+    try {
+        const cartItems = yield store.getCartItem(req.params.id);
+        res.json(cartItems);
+    }
+    catch (err) {
+        res.status(400);
+        res.json(err);
+    }
 });
 const usersHandler = (app) => {
-    app.get('/users', index);
-    app.get('/users/:id', show);
+    app.get('/users', verifyAuth_1.default, index);
+    app.get('/users/:id', verifyAuth_1.default, show);
     app.post('/users/authenticate', authenticate);
     app.post('/users', create);
     app.put('/users/:id', verifyAuth_1.default, update);

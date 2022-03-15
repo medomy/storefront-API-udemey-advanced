@@ -8,12 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const product_1 = require("../models/product");
+const verifyAuth_1 = __importDefault(require("../middlewares/verifyAuth"));
 const store = new product_1.ProductStore;
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const products = yield store.getAllProduct();
-    res.json(products);
+    try {
+        const products = yield store.getAllProduct();
+        res.json(products);
+    }
+    catch (err) {
+        res.status(400);
+        res.json(err);
+    }
 });
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -33,12 +43,24 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const product = yield store.getOneProduct(req.params.id);
-    res.json(product);
+    try {
+        const product = yield store.getOneProduct(req.params.id);
+        res.json(product);
+    }
+    catch (err) {
+        res.status(400);
+        res.json(err);
+    }
 });
 const destroy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const deletedProduct = yield store.deleteProduct(req.params.id);
-    res.json(deletedProduct);
+    try {
+        const deletedProduct = yield store.deleteProduct(req.params.id);
+        res.json(deletedProduct);
+    }
+    catch (err) {
+        res.status(400);
+        res.json(err);
+    }
 });
 const update = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const originalProduct = yield store.getOneProduct(req.params.id);
@@ -60,8 +82,8 @@ const update = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 const productsHandler = (app) => {
     app.get('/products', index);
     app.get('/products/:id', show);
-    app.post('/products', create);
-    app.put('/products/:id', update);
+    app.post('/products', verifyAuth_1.default, create);
+    app.put('/products/:id', verifyAuth_1.default, update);
     app.delete('/products/:id', destroy);
 };
 exports.default = productsHandler;

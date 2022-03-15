@@ -8,12 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const order_1 = require("../models/order");
+const verifyAuth_1 = __importDefault(require("../middlewares/verifyAuth"));
 const store = new order_1.OrderStore;
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const orders = yield store.index();
-    res.json(orders);
+    try {
+        const orders = yield store.index();
+        res.json(orders);
+    }
+    catch (err) {
+        res.status(400);
+        res.json(err);
+    }
 });
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -31,17 +41,29 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const order = yield store.show(req.params.id);
-    res.json(order);
+    try {
+        const order = yield store.show(req.params.id);
+        res.json(order);
+    }
+    catch (err) {
+        res.status(400);
+        res.json(err);
+    }
 });
 const destroy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const deletedOrder = yield store.delete(req.params.id);
-    res.json(deletedOrder);
+    try {
+        const deletedOrder = yield store.delete(req.params.id);
+        res.json(deletedOrder);
+    }
+    catch (err) {
+        res.status(400);
+        res.json(err);
+    }
 });
 const ordersHandler = (app) => {
-    app.get('/orders', index);
-    app.get('/orders/:id', show);
-    app.post('/orders', create);
-    app.delete('/orders/:id', destroy);
+    app.get('/orders', verifyAuth_1.default, index);
+    app.get('/orders/:id', verifyAuth_1.default, show);
+    app.post('/orders', verifyAuth_1.default, create);
+    app.delete('/orders/:id', verifyAuth_1.default, destroy);
 };
 exports.default = ordersHandler;
