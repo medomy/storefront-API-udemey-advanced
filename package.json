@@ -31,9 +31,11 @@
     "@types/jasmine": "^3.10.3",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/pg": "^8.6.4",
+    "@types/supertest": "^2.0.11",
     "jasmine": "^4.0.2",
     "jasmine-spec-reporter": "^7.0.0",
     "nodemon": "^2.0.15",
+    "supertest": "^6.2.2",
     "ts-node": "^10.4.0"
   }
 }

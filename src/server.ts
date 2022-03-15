@@ -29,5 +29,6 @@ ordersHandler(app);
 app.listen(port,()=>{
     console.log (`server opened at ${address}`);
 })
+export default app;
 
 
