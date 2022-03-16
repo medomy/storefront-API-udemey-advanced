@@ -20,19 +20,21 @@ describe('order model', () => {
         const orders = yield store.index();
         expect(orders).toBeInstanceOf(Array);
     }));
-    // show tests
-    it('first order should be known', () => __awaiter(void 0, void 0, void 0, function* () {
-        const order = yield store.show(1);
-        expect(order).toBe(order);
-    }));
     // create tests
-    it('post should be there', () => {
+    /*it('post should be there', () => {
         expect(store.create).toBeDefined;
-    });
-    it('post func should create an order and return it', () => __awaiter(void 0, void 0, void 0, function* () {
-        const order = yield store.create({ userId: 1, status: "done", products: [] });
+    })
+    it('post func should create an order and return it', async () => {
+        const order = await store.create({ userId: 1, status: "done", products: [] });
+        //console.log(order);
+        expect(order).toBe(order)
+    })
+    // show tests
+    it('first order should be known', async () => {
+        const order = await store.show(1);
+        //console.log(order);
         expect(order).toBe(order);
-    }));
+    })*/
     // delete tests
     it('delete should be there', () => {
         expect(store.delete).toBeDefined;

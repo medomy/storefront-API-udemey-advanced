@@ -28,7 +28,7 @@ export class OrderStore {
     }
     async show(id : string | number): Promise<order>{
         try{
-            const sql = `SELECT * FROM order WHERE id=($1)`;
+            const sql = `SELECT * FROM orders WHERE id=($1)`;
             const connection = await client.connect();
             const result = await connection.query(sql,[id]);
             connection.release();
@@ -41,7 +41,7 @@ export class OrderStore {
         try{
             const sql = `INSERT INTO orders (user_id , products_ids_qtys ,status) VALUES($1, $2, $3) RETURNING *`;
             const connection = await client.connect();
-            const result = await connection.query(sql,[o.userId,JSON.stringify(o.products),o.status]);
+            const result = await connection.query(sql,[o.userId,/*JSON.stringify*/(o.products),o.status]);
             connection.release();
             return result.rows[0];
         }catch(err){

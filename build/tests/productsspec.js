@@ -20,11 +20,6 @@ describe('product model', () => {
         const products = yield store.getAllProduct();
         expect(products).toBeInstanceOf(Array);
     }));
-    // show tests
-    it('first product should be known', () => __awaiter(void 0, void 0, void 0, function* () {
-        const product = yield store.getOneProduct(1);
-        expect(product).toEqual({ id: 1, title: 'toshiba', price: 58, descripe: 'momo', company: "el araby" });
-    }));
     // create tests
     it('post should be there', () => {
         expect(store.createProdct).toBeDefined;
@@ -32,6 +27,11 @@ describe('product model', () => {
     it('post func should create a product and return it', () => __awaiter(void 0, void 0, void 0, function* () {
         const product = yield store.createProdct({ title: "ay", price: 55, descripe: 'wala', company: "yalla" });
         expect(product).toBe(product);
+    }));
+    // show tests
+    it('first product should be known', () => __awaiter(void 0, void 0, void 0, function* () {
+        const product = yield store.getOneProduct(1);
+        expect(product).toEqual({ id: 1, title: 'ay', price: 55, descripe: 'wala', company: "yalla" });
     }));
     // delete tests
     it('delete should be there', () => {

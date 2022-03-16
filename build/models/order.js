@@ -32,7 +32,7 @@ class OrderStore {
     show(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = `SELECT * FROM order WHERE id=($1)`;
+                const sql = `SELECT * FROM orders WHERE id=($1)`;
                 const connection = yield DB_1.default.connect();
                 const result = yield connection.query(sql, [id]);
                 connection.release();
@@ -48,7 +48,7 @@ class OrderStore {
             try {
                 const sql = `INSERT INTO orders (user_id , products_ids_qtys ,status) VALUES($1, $2, $3) RETURNING *`;
                 const connection = yield DB_1.default.connect();
-                const result = yield connection.query(sql, [o.userId, JSON.stringify(o.products), o.status]);
+                const result = yield connection.query(sql, [o.userId, /*JSON.stringify*/ (o.products), o.status]);
                 connection.release();
                 return result.rows[0];
             }
